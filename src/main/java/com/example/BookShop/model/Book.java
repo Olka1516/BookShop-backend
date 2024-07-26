@@ -11,21 +11,22 @@ public class Book {
     private String description;
     private String author;
     private double price;
-    private String count;
+    private int amount;
     private String image;
     private String category;
     private int star;
 
 
-    public Book(String title, String description, String author, double price, String count, String image, String category, int star) {
+    public Book(String title, String description, String author, double price, int amount, String image, String category, int star, String id) {
         this.title = title;
         this.description = description;
         this.author = author;
         this.price = price;
-        this.count = count;
+        this.amount = amount;
         this.image = image;
         this.category = category;
         this.star = star;
+        this.id = id;
     }
 
     public String getId() {
@@ -68,12 +69,12 @@ public class Book {
         this.price = price;
     }
 
-    public String getCount() {
-        return count;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(String count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public String getImage() {
