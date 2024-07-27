@@ -30,7 +30,7 @@ public class ImageUploadingService {
     private String uploadFile(File file, String fileName) throws IOException {
         BlobId blobId = BlobId.of(bucketName, fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpg").build();
-        try (InputStream inputStream = ImageUploadingService.class.getClassLoader().getResourceAsStream("BookShop.json")) {
+        try (InputStream inputStream = ImageUploadingService.class.getClassLoader().getResourceAsStream("book-shop.json")) {
             Credentials credentials = GoogleCredentials.fromStream(inputStream);
             Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
             storage.create(blobInfo, Files.readAllBytes(file.toPath()));

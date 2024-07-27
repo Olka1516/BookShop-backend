@@ -36,8 +36,8 @@ public class BookController {
         }
     }
 
-    @PostMapping(value = "/add-book", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addBook(@RequestParam("file") MultipartFile multipartFile) {
+    @PostMapping(value = "/add-book", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addBook(@RequestPart(value = "file", required = false) MultipartFile multipartFile) {
 //        String title = request.getParameter("title");
 //        String description = request.getParameter("description");
 //        String author = request.getParameter("author");
