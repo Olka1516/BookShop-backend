@@ -37,23 +37,23 @@ public class BookController {
     }
 
     @PostMapping(value = "/add-book", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addBook(@RequestPart(value = "file", required = false) MultipartFile multipartFile) {
-//        String title = request.getParameter("title");
-//        String description = request.getParameter("description");
-//        String author = request.getParameter("author");
-//        Double price = Double.valueOf(request.getParameter("price"));
-//        int amount = Integer.parseInt(request.getParameter("amount"));
-//        String category = request.getParameter("category");
+    public ResponseEntity<?> addBook(@RequestPart(value = "file") MultipartFile multipartFile, HttpServletRequest request) {
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        String author = request.getParameter("author");
+        Double price = Double.valueOf(request.getParameter("price"));
+        int amount = Integer.parseInt(request.getParameter("amount"));
+        String category = request.getParameter("category");
         UUID uuid = UUID.randomUUID();
             String image = imageUploadingService.upload(multipartFile, uuid.toString());
             if (Objects.equals(image, "Image couldn't upload, Something went wrong"))
                 return ResponseEntity.badRequest().body(new MessageResponse
                         (HttpStatus.BAD_REQUEST.value(), "Something went wrong, please try again later"));
 
-//            Book book = new Book(title, description, author, price, amount,
-//                    image, category, 0, uuid.toString());
-//
-//            bookRepository.save(book);
+            Book book = new Book(title, description, author, price, amount,
+                    image, category, 0, uuid.toString());
+
+            bookRepository.save(book);
             return ResponseEntity.ok(new MessageResponse(HttpStatus.OK.value(), "Book added successfully"));
     }
 
@@ -67,8 +67,8 @@ public class BookController {
         }
     }
 
-    @PutMapping("/update-book")
-    public ResponseEntity<?> updateBook(@Valid @RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
+    @PutMapping(value = "/update-book", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateBook(@RequestPart(value = "file")  MultipartFile multipartFile, HttpServletRequest request) {
         String id = request.getParameter("id");
         Optional<Book> bookData = bookRepository.findById(id);
         if (bookData.isEmpty()) {

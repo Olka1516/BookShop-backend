@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+book-shop.json
+config.properties
