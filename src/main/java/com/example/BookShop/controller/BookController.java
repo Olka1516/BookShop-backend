@@ -48,7 +48,7 @@ public class BookController {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String author = request.getParameter("author");
-        Double price = Double.valueOf(request.getParameter("price"));
+        double price = Double.parseDouble(request.getParameter("price"));
         int amount = Integer.parseInt(request.getParameter("amount"));
         String category = request.getParameter("category");
         UUID uuid = UUID.randomUUID();
@@ -104,5 +104,15 @@ public class BookController {
 
         bookRepository.save(_bookInfo);
         return ResponseEntity.ok(new MessageResponse(HttpStatus.OK.value(), "Book information updated successfully"));
+    }
+
+    @GetMapping("/search-book/{param}")
+    public ResponseEntity<?> searchBook(@PathVariable("param") String param) {
+        List<Book> books = bookRepository.searchBooksByParam(param);
+        if (books.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(books);
+        }
     }
 }
